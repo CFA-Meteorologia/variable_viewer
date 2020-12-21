@@ -1,7 +1,8 @@
 import { useContext } from "react";
-import { SideEffectContext} from "./context";
+import { SideEffectContext } from "./context";
+import { SideEffectsBundle } from "../../types/sideEffect";
 
-const useSideEffects = () => {
+const useSideEffects = (): SideEffectsBundle => {
     return useContext(SideEffectContext)
 }
 

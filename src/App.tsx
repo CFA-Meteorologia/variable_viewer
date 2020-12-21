@@ -1,8 +1,12 @@
 import React from 'react';
+import VariableViewer from "./scenes/VariableViewer/VariableViewer";
 
 function App() {
   return (
-    <>Initial App</>
+    <>
+      <VariableViewer/>
+      Initial App
+    </>
   );
 }
 

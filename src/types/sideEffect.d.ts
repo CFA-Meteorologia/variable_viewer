@@ -1,8 +1,15 @@
-import { AppStore } from "./appStore";
+import { AppState } from "./appState";
 import {Store} from "redux";
+import {MapSideEffectsType} from 'services/map/types'
 
-type SideEffectBody = (params: any) => void;
+export interface ISideEffectDependencies {
+    store: Store<AppState>
+    effects: SideEffectsBundle
+}
+export type SideEffectScope = (dependencies: ISideEffectDependencies) => SideEffect;
 
-export type SideEffect = (store: Store<AppStore>) => SideEffectBody;
+export type SideEffect = MapSideEffectsType
 
-export type SideEffects = { [key: string]: SideEffectBody };
+export interface SideEffectsBundle {
+    mapSideEffects: MapSideEffectsType,
+}

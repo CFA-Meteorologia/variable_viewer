@@ -1,5 +1,7 @@
-import {SideEffect} from "types/sideEffect";
+import mapSideEffects from "services/map/sideEffects";
 
-const sideEffects: { [key: string]: SideEffect } = { };
+const sideEffects = {
+    mapSideEffects,
+};
 
 export default sideEffects;
