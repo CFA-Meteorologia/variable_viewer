@@ -1,7 +1,4 @@
-import useSideEffects from "./useSideEffects";
-import { SideEffectProvider } from "./context";
+import useSideEffects from './useSideEffects'
+import { SideEffectProvider } from './context'
 
-export {
-    useSideEffects,
-    SideEffectProvider,
-}
+export { useSideEffects, SideEffectProvider }

@@ -1,7 +1,7 @@
-import mapSideEffects from "services/map/sideEffects";
+import mapSideEffects from 'services/map/sideEffects'
 
 const sideEffects = {
-    mapSideEffects,
-};
+  mapSideEffects,
+}
 
-export default sideEffects;
+export default sideEffects

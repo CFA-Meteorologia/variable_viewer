@@ -1,3 +1,3 @@
 export interface MapSideEffectsType {
-    createMap: (elementId: string) => void
+  createMap: (elementId: string) => void
 }

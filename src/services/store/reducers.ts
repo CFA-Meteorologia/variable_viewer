@@ -1,8 +1,8 @@
-import variableViewerReducer  from 'scenes/VariableViewer/reducer';
+import variableViewerReducer from 'scenes/VariableViewer/reducer'
 import mapReducer from 'services/map/reducer'
 
 const reducers = {
-    variableViewerReducer,
-    mapReducer,
+  variableViewerReducer,
+  mapReducer,
 }
-export default reducers;
+export default reducers
