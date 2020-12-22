@@ -13,7 +13,8 @@ const VariableViewer = () => {
 
   useLayoutEffect(() => {
     mapSideEffects.createMap(mapElemId)
-  }, [])
+    return () => mapSideEffects.removeMap()
+  }, [mapSideEffects])
 
   return <Wrapper id={mapElemId} />
 }
