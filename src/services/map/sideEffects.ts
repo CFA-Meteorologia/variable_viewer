@@ -1,10 +1,13 @@
 import { SideEffectScope } from 'types/sideEffect'
 import { Map, tileLayer } from 'leaflet'
 import 'leaflet/dist/leaflet.css'
-import { MapSideEffectsType } from './types'
 
-const mapSideEffects: SideEffectScope = (dependencies): MapSideEffectsType => {
-  let lastMapCreated
+import { MapSideEffectsType } from './types'
+import { mapChangeView } from './actions'
+import { selectView, selectZoom } from './selectors'
+
+const mapSideEffects: SideEffectScope = ({ store }): MapSideEffectsType => {
+  let lastMapCreated: Map
   const createMap = (elementId) => {
     lastMapCreated = new Map(elementId)
 
@@ -14,16 +17,35 @@ const mapSideEffects: SideEffectScope = (dependencies): MapSideEffectsType => {
     )
 
     lastMapCreated.addLayer(layer)
-    lastMapCreated.setView([51.505, -0.09], 13)
+    setCurrentView()
+
+    lastMapCreated.on('moveend', ({ target }) => {
+      const center = target.getCenter()
+      store.dispatch(mapChangeView(center.lat, center.lng, target.getZoom()))
+    })
   }
 
   const removeMap = () => {
     lastMapCreated.remove()
   }
 
+  const moveView = (lat, lng, zoom?) => {
+    let zoomToSet = zoom
+    if (!zoom) zoomToSet = selectZoom(store.getState())
+
+    store.dispatch(mapChangeView(lat, lng, zoomToSet))
+    setCurrentView()
+  }
+
+  const setCurrentView = () => {
+    const appState = store.getState()
+    lastMapCreated.setView(selectView(appState), selectZoom(appState))
+  }
+
   return {
     createMap,
     removeMap,
+    moveView,
   }
 }
 

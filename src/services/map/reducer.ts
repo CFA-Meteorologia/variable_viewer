@@ -1,3 +1,5 @@
+import { MAP_CHANGE_CENTER } from './actions'
+
 export interface IMapState {
   latitude: number
   longitude: number
@@ -5,13 +7,22 @@ export interface IMapState {
 }
 
 const initialState: IMapState = {
-  latitude: 0,
-  longitude: 0,
-  zoom: 13,
+  //initial state looking at Cuba
+  latitude: 19.12440952808487,
+  longitude: -72.55371093750001,
+  zoom: 5,
 }
 
 const reducer = function (state = initialState, { type, payload }) {
   switch (type) {
+    case MAP_CHANGE_CENTER: {
+      return {
+        ...state,
+        latitude: payload.lat,
+        longitude: payload.lng,
+        zoom: payload.zoom,
+      }
+    }
     default:
       return state
   }
