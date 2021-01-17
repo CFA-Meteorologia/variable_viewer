@@ -8,4 +8,5 @@ export const selectView = (state) => {
   return new LatLng(featureState.latitude, featureState.longitude)
 }
 
+export const selectLayers = (state) => selectState(state).layers
 export const selectZoom = (state) => selectState(state).zoom

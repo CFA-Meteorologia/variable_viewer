@@ -4,7 +4,8 @@ import 'leaflet/dist/leaflet.css'
 
 import { MapSideEffectsType } from './types'
 import { mapChangeView } from './actions'
-import { selectView, selectZoom } from './selectors'
+import { selectLayers, selectView, selectZoom } from './selectors'
+import WeatherVariableWMSLayer from './classes/WeatherVariableWMSLayer'
 
 const mapSideEffects: SideEffectScope = ({ store }): MapSideEffectsType => {
   let lastMapCreated: Map
@@ -23,6 +24,12 @@ const mapSideEffects: SideEffectScope = ({ store }): MapSideEffectsType => {
       const center = target.getCenter()
       store.dispatch(mapChangeView(center.lat, center.lng, target.getZoom()))
     })
+
+    const layers = selectLayers(store.getState())
+
+    layers.forEach((layer) =>
+      lastMapCreated.addLayer(new WeatherVariableWMSLayer({ ...layer })),
+    )
   }
 
   const removeMap = () => {

@@ -3,3 +3,17 @@ export interface MapSideEffectsType {
   removeMap: () => void
   moveView: (lat: number, lng: number) => void
 }
+
+export type Coord = {
+  long: number
+  lat: number
+}
+export type Bbox = {
+  northWest: Coord
+  southEast: Coord
+}
+export interface VariableLayer {
+  variable: string
+  domain: number
+  bbox: Bbox
+}
