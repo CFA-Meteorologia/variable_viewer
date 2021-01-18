@@ -17,6 +17,7 @@ const initialState: IMapState = {
     {
       variable: 'T2',
       domain: 1,
+      time: '2020-07-06T00:00:00/2020-07-07T00:00:00/PT3H',
       bbox: {
         northWest: {
           long: -99.2800750732422,
@@ -28,34 +29,34 @@ const initialState: IMapState = {
         },
       },
     },
-    {
-      variable: 'T2',
-      domain: 2,
-      bbox: {
-        northWest: {
-          long: -88.2739944458008,
-          lat: 26.5959930419922,
-        },
-        southEast: {
-          long: -70.9283981323242,
-          lat: 17.6354064941406,
-        },
-      },
-    },
-    {
-      variable: 'T2',
-      domain: 3,
-      bbox: {
-        northWest: {
-          long: -85.717041015625,
-          lat: 24.2644119262695,
-        },
-        southEast: {
-          long: -73.7653961181641,
-          lat: 19.3405456542969,
-        },
-      },
-    },
+    // {
+    //   variable: 'T2',
+    //   domain: 2,
+    //   bbox: {
+    //     northWest: {
+    //       long: -88.2739944458008,
+    //       lat: 26.5959930419922,
+    //     },
+    //     southEast: {
+    //       long: -70.9283981323242,
+    //       lat: 17.6354064941406,
+    //     },
+    //   },
+    // },
+    // {
+    //   variable: 'T2',
+    //   domain: 3,
+    //   bbox: {
+    //     northWest: {
+    //       long: -85.717041015625,
+    //       lat: 24.2644119262695,
+    //     },
+    //     southEast: {
+    //       long: -73.7653961181641,
+    //       lat: 19.3405456542969,
+    //     },
+    //   },
+    // },
   ],
 }
 

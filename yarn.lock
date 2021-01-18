@@ -6360,6 +6360,11 @@ isexe@^2.0.0:
   resolved "https://registry.yarnpkg.com/isexe/-/isexe-2.0.0.tgz#e8fbf374dc556ff8947a10dcb0572d633f2cfa10"
   integrity sha1-6PvzdNxVb/iUehDcsFctYz8s+hA=
 
+iso8601-js-period@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/iso8601-js-period/-/iso8601-js-period-0.2.1.tgz#f17ea1e45ae14781b02f1d708b5ab457fd7174a0"
+  integrity sha512-iDyz2TQFBd5WhCZjruOwHj01JkQGu7YbVLCVdpA7lCGEcBzE3ffCPAhLh/M8TAp//kCixPpYN4XU54WHCxvD2Q==
+
 isobject@^2.0.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/isobject/-/isobject-2.1.0.tgz#f065561096a3f1da2ef46272f815c840d87e0c89"
@@ -7049,6 +7054,14 @@ last-call-webpack-plugin@^3.0.0:
   dependencies:
     lodash "^4.17.5"
     webpack-sources "^1.1.0"
+
+leaflet-timedimension-scoped@^0.0.26:
+  version "0.0.26"
+  resolved "https://registry.yarnpkg.com/leaflet-timedimension-scoped/-/leaflet-timedimension-scoped-0.0.26.tgz#27bb40f2362aa1d32179ad86711f0a4407746b02"
+  integrity sha512-iy/++mN1iqM2QqK3GPrqXeB5PxNmpAlB220rgSTwCmViM6a/MObtciq40coe53QUTsAU2m64e1yw82AiUxwaDQ==
+  dependencies:
+    iso8601-js-period "^0.2.1"
+    leaflet "^1.7.1"
 
 leaflet@^1.7.1:
   version "1.7.1"

@@ -1,16 +1,25 @@
 import { SideEffectScope } from 'types/sideEffect'
-import { Map, tileLayer } from 'leaflet'
-import 'leaflet/dist/leaflet.css'
+import { Layer, Map, tileLayer } from 'leaflet'
 
 import { MapSideEffectsType } from './types'
 import { mapChangeView } from './actions'
 import { selectLayers, selectView, selectZoom } from './selectors'
+import {
+  TimeDimensionWMSLayer,
+  TimeDimension,
+} from 'leaflet-timedimension-scoped'
 import WeatherVariableWMSLayer from './classes/WeatherVariableWMSLayer'
+
+import 'leaflet/dist/leaflet.css'
+import 'leaflet-timedimension-scoped/src/leaflet.timedimension.control.css'
 
 const mapSideEffects: SideEffectScope = ({ store }): MapSideEffectsType => {
   let lastMapCreated: Map
   const createMap = (elementId) => {
-    lastMapCreated = new Map(elementId)
+    lastMapCreated = new Map(elementId, {
+      timeDimension: true,
+      timeDimensionControl: true,
+    })
 
     const layer = tileLayer(
       // eslint-disable-next-line
@@ -27,9 +36,21 @@ const mapSideEffects: SideEffectScope = ({ store }): MapSideEffectsType => {
 
     const layers = selectLayers(store.getState())
 
-    layers.forEach((layer) =>
-      lastMapCreated.addLayer(new WeatherVariableWMSLayer({ ...layer })),
-    )
+    layers.forEach((layer) => {
+      const wmsLayer = new WeatherVariableWMSLayer(
+        'http://localhost:8080/insmet/wms',
+        { ...layer },
+      )
+      lastMapCreated.addLayer(
+        new TimeDimensionWMSLayer(wmsLayer, {
+          cache: 24,
+          wmsVersion: '1.1.0',
+        }) as Layer,
+      )
+
+      // @ts-ignore
+      lastMapCreated.timeDimension.setAvailableTimes(layer.time, 'replace')
+    })
   }
 
   const removeMap = () => {

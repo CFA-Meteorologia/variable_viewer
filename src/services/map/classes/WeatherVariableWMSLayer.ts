@@ -2,7 +2,7 @@ import { Map, DomUtil, Layer, Util, LatLng } from 'leaflet'
 import { Bbox } from '../types'
 
 interface IWeatherVariableWMSLayer {
-  new (options: { bbox: Bbox; variable: string; domain: number })
+  new (url: string, options: { bbox: Bbox; variable: string; domain: number })
 }
 
 const WeatherVariableWMSLayer: IWeatherVariableWMSLayer = Layer.extend({
@@ -38,14 +38,20 @@ const WeatherVariableWMSLayer: IWeatherVariableWMSLayer = Layer.extend({
   workSpace: 'insmet',
   baseUrl: 'http://localhost:8080/insmet/wms',
   domainSizes: [300, 500, 500],
+  _visible: true,
+  _loaded: false,
 
-  initialize: function (options) {
+  initialize: function (url, options) {
     Util.setOptions(this, options)
+    this.baseUrl = url
     this.configureWMS()
   },
 
   onAdd: function (map: Map) {
     this._container = DomUtil.create('img')
+
+    // TimeDimensionWMS interface implementation
+    this._container.addEventListener('load', () => this.fire('load'))
 
     this.getPane().appendChild(this._container)
     this._container.src = this.getRequestUrl()
@@ -63,6 +69,11 @@ const WeatherVariableWMSLayer: IWeatherVariableWMSLayer = Layer.extend({
   _update: function (map: Map) {
     // Recalculate position of container
 
+    // TimeDimensionWMS interface implementation
+    if (!this._visible && this._loaded) {
+      return
+    }
+
     const northWestPixel = map.latLngToLayerPoint(this.getNorthWest())
     const southEastPixel = map.latLngToLayerPoint(this.getSouthEast())
 
@@ -71,8 +82,6 @@ const WeatherVariableWMSLayer: IWeatherVariableWMSLayer = Layer.extend({
       Math.abs(northWestPixel.x - southEastPixel.x) + 'px'
     this._container.style.height =
       Math.abs(northWestPixel.y - southEastPixel.y) + 'px'
-
-    // Add/remove/reposition children elements if needed
   },
   getRequestUrl: function () {
     const northWest = this.getNorthWest(),
@@ -80,13 +89,14 @@ const WeatherVariableWMSLayer: IWeatherVariableWMSLayer = Layer.extend({
       bbox = [northWest.lng, southEast.lat, southEast.lng, northWest.lat].join(
         ',',
       ),
-      url = this.baseUrl
-    return (
-      url +
-      Util.getParamString(this.wmsParams, url, this.options.uppercase) +
-      (this.options.uppercase ? '&BBOX=' : '&bbox=') +
-      bbox
-    )
+      url = this.baseUrl,
+      params = {
+        ...this.wmsParams,
+        time: this.options.time,
+        bbox,
+      }
+
+    return `${url}${Util.getParamString(params, url)}`
   },
   getNorthWest: function () {
     const { northWest } = this.options.bbox
@@ -107,6 +117,33 @@ const WeatherVariableWMSLayer: IWeatherVariableWMSLayer = Layer.extend({
     const { variable, domain } = this.options
     const { workSpace } = this
     return `${workSpace}:${variable}_d0${domain}`
+  },
+
+  // TimeDimensionWMS interface implementation
+  setLoaded: function (loaded) {
+    this._loaded = loaded
+  },
+
+  isLoaded: function () {
+    return this._loaded
+  },
+
+  hide: function () {
+    this._visible = false
+    if (this._container) {
+      this._container.style.display = 'none'
+    }
+  },
+
+  show: function () {
+    this._visible = true
+    if (this._container) {
+      this._container.style.display = 'block'
+    }
+  },
+
+  getURL: function () {
+    return this.baseUrl
   },
 })
 

@@ -16,4 +16,6 @@ export interface VariableLayer {
   variable: string
   domain: number
   bbox: Bbox
+  // ISO 8601 time period
+  time: string
 }
