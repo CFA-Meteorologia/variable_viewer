@@ -37,6 +37,7 @@ const WeatherVariableWMSLayer: IWeatherVariableWMSLayer = Layer.extend({
   },
   workSpace: 'insmet',
   baseUrl: 'http://localhost:8080/insmet/wms',
+  domainSizes: [300, 500, 500],
 
   initialize: function (options) {
     Util.setOptions(this, options)
@@ -48,7 +49,7 @@ const WeatherVariableWMSLayer: IWeatherVariableWMSLayer = Layer.extend({
 
     this.getPane().appendChild(this._container)
     this._container.src = this.getRequestUrl()
-    this._container.className = 'leaflet-zoom-animated'
+    this._container.className = 'leaflet-zoom-animated weather-tile'
     this._update(map)
 
     map.on('zoomend viewreset', Util.bind(this._update, this, map), this)
@@ -97,8 +98,10 @@ const WeatherVariableWMSLayer: IWeatherVariableWMSLayer = Layer.extend({
   },
   configureWMS: function () {
     this.wmsParams.layers = this.getLayerName()
-    this.wmsParams.width = 256
-    this.wmsParams.height = 256
+    const { domain } = this.options
+    const size = this.domainSizes[domain - 1]
+    this.wmsParams.width = size
+    this.wmsParams.height = size
   },
   getLayerName: function () {
     const { variable, domain } = this.options

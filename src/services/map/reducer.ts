@@ -28,6 +28,34 @@ const initialState: IMapState = {
         },
       },
     },
+    {
+      variable: 'T2',
+      domain: 2,
+      bbox: {
+        northWest: {
+          long: -88.2739944458008,
+          lat: 26.5959930419922,
+        },
+        southEast: {
+          long: -70.9283981323242,
+          lat: 17.6354064941406,
+        },
+      },
+    },
+    {
+      variable: 'T2',
+      domain: 3,
+      bbox: {
+        northWest: {
+          long: -85.717041015625,
+          lat: 24.2644119262695,
+        },
+        southEast: {
+          long: -73.7653961181641,
+          lat: 19.3405456542969,
+        },
+      },
+    },
   ],
 }
 
