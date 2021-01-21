@@ -4,10 +4,7 @@ import { Layer, Map, tileLayer } from 'leaflet'
 import { MapSideEffectsType } from './types'
 import { mapChangeView } from './actions'
 import { selectLayers, selectView, selectZoom } from './selectors'
-import {
-  TimeDimensionWMSLayer,
-  TimeDimension,
-} from 'leaflet-timedimension-scoped'
+import { TimeDimensionWMSLayer } from 'leaflet-timedimension-scoped'
 import WeatherVariableWMSLayer from './classes/WeatherVariableWMSLayer'
 
 import 'leaflet/dist/leaflet.css'
@@ -19,6 +16,9 @@ const mapSideEffects: SideEffectScope = ({ store }): MapSideEffectsType => {
     lastMapCreated = new Map(elementId, {
       timeDimension: true,
       timeDimensionControl: true,
+      timeDimensionControlOptions: {
+        onlyUTC: true,
+      },
     })
 
     const layer = tileLayer(

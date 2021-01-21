@@ -17,7 +17,7 @@ const initialState: IMapState = {
     {
       variable: 'T2',
       domain: 1,
-      time: '2020-07-06T00:00:00/2020-07-07T00:00:00/PT3H',
+      time: '2020-07-06T00:00:00Z/2020-07-07T00:00:00Z/PT3H',
       bbox: {
         northWest: {
           long: -99.2800750732422,
