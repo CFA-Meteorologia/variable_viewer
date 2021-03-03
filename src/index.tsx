@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import App from './App'
 import { configureStore } from './services/store'
-import { SideEffectProvider } from './services/sideEffects'
 import { PersistGate } from 'redux-persist/integration/react'
 import Loader from 'components/Loader'
 
@@ -13,9 +12,7 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <PersistGate persistor={persistor} loading={Loader}>
-        <SideEffectProvider>
-          <App />
-        </SideEffectProvider>
+        <App />
       </PersistGate>
     </Provider>
   </React.StrictMode>,

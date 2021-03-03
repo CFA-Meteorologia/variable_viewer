@@ -1,6 +1,7 @@
-import { useSideEffects } from '../../services/sideEffects'
 import { useLayoutEffect } from 'react'
 import styled from 'styled-components'
+import { useDispatch } from 'react-redux'
+import { createMap, removeMap } from 'services/map/actions'
 
 const Wrapper = styled.div`
   width: 100vw;
@@ -9,12 +10,14 @@ const Wrapper = styled.div`
 
 const VariableViewer = () => {
   const mapElemId = 'map'
-  const { mapSideEffects } = useSideEffects()
+  const dispatch = useDispatch()
 
   useLayoutEffect(() => {
-    mapSideEffects.createMap(mapElemId)
-    return () => mapSideEffects.removeMap()
-  }, [mapSideEffects])
+    dispatch(createMap(mapElemId))
+    return () => {
+      dispatch(removeMap())
+    }
+  }, [])
 
   return <Wrapper id={mapElemId} />
 }

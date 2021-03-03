@@ -1,7 +1,10 @@
 import reducers from './reducers'
-import { combineReducers, compose, createStore } from 'redux'
+import sagas from './sagas'
+import { applyMiddleware, combineReducers, compose, createStore } from 'redux'
 import { persistStore, persistReducer } from 'redux-persist'
+import createSagaMiddleware from 'redux-saga'
 import storage from 'redux-persist/lib/storage/session'
+import VariablesMap from 'services/map/classes/VariablesMap'
 
 const persistConfig = {
   key: 'variable_viewer_state',
@@ -18,8 +21,16 @@ export const configureStore = () => {
     persistConfig,
     combineReducers({ ...reducers }),
   )
-  console.log(enhancedReducers)
-  const store = createStore(enhancedReducers, composeEnhancers())
+  const sagaMiddleware = createSagaMiddleware()
+  const store = createStore(
+    enhancedReducers,
+    composeEnhancers(applyMiddleware(sagaMiddleware)),
+  )
+
+  const dependencies = {
+    variablesMap: new VariablesMap(store),
+  }
+  sagas.forEach((saga) => sagaMiddleware.run(saga, dependencies))
 
   return {
     store,

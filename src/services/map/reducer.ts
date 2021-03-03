@@ -14,21 +14,21 @@ const initialState: IMapState = {
   longitude: -72.55371093750001,
   zoom: 5,
   layers: [
-    {
-      variable: 'T2',
-      domain: 1,
-      time: '2020-07-06T00:00:00Z/2020-07-07T00:00:00Z/PT3H',
-      bbox: {
-        northWest: {
-          long: -99.2800750732422,
-          lat: 32.0433044433594,
-        },
-        southEast: {
-          long: -62.8279266357422,
-          lat: 13.6513442993164,
-        },
-      },
-    },
+    // {
+    //   variable: 'T2',
+    //   domain: 1,
+    //   time: '2020-07-06T00:00:00Z/2020-07-07T00:00:00Z/PT3H',
+    //   bbox: {
+    //     northWest: {
+    //       long: -99.2800750732422,
+    //       lat: 32.0433044433594,
+    //     },
+    //     southEast: {
+    //       long: -62.8279266357422,
+    //       lat: 13.6513442993164,
+    //     },
+    //   },
+    // },
     // {
     //   variable: 'T2',
     //   domain: 2,
