@@ -64,7 +64,6 @@ const DatePicker: FC = () => {
                 onMonthChange={handleMonthChange}
                 includeDates={daysWithData.map((d) => new Date(d))}
                 forceShowMonthNavigation
-                openToDate={new Date(currentDate)}
                 inline
               />
             </DatePickerContainer>
