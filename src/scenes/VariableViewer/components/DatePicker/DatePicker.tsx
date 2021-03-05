@@ -10,20 +10,29 @@ import {
 import { getAvailableDataInMonth, setCurrentDate } from '../../actions'
 import Loader from 'components/Loader'
 import styled from 'styled-components'
+import Button from 'components/Button/Button'
+import { format } from 'date-fns'
 
-const StyledButton = styled.button``
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`
+
+const DatePickerContainer = styled.div`
+  margin-top: 10px;
+`
 
 const DatePicker: FC = () => {
   const dispatch = useDispatch()
   const [open, setOpen] = useState(false)
-  const [time, setTime] = useState(new Date())
   const currentDate = useSelector(selectCurrentDate)
+  const [date, setDate] = useState(new Date(currentDate))
   const isLoading = useSelector(selectIsLoadingDaysWithData)
   const daysWithData = useSelector(selectDaysWithData)
 
   const handleCurrentDateChange = (date: Date) => {
-    setTime(date)
-    // dispatch(setCurrentDate(date.toISOString()))
+    setDate(date)
+    dispatch(setCurrentDate(date.toISOString()))
   }
 
   const handleToggle = () => {
@@ -32,7 +41,7 @@ const DatePicker: FC = () => {
 
   const handleMonthChange = (date: Date) => {
     dispatch(getAvailableDataInMonth(date.toISOString()))
-    setTime(date)
+    setDate(date)
   }
 
   useEffect(() => {
@@ -44,17 +53,21 @@ const DatePicker: FC = () => {
       {isLoading && <Loader />}
       {!isLoading && (
         <>
-          <StyledButton onClick={handleToggle}> bbb</StyledButton>
+          <ButtonContainer>
+            <Button onClick={handleToggle}> {format(date, 'dd-MMM-Y')}</Button>
+          </ButtonContainer>
           {open && (
-            <DPicker
-              onChange={handleCurrentDateChange}
-              selected={time}
-              onMonthChange={handleMonthChange}
-              // excludeDates={daysWithoutData}
-              includeDates={daysWithData.map((d) => new Date(d))}
-              forceShowMonthNavigation
-              inline
-            />
+            <DatePickerContainer>
+              <DPicker
+                onChange={handleCurrentDateChange}
+                selected={date}
+                onMonthChange={handleMonthChange}
+                includeDates={daysWithData.map((d) => new Date(d))}
+                forceShowMonthNavigation
+                openToDate={new Date(currentDate)}
+                inline
+              />
+            </DatePickerContainer>
           )}
         </>
       )}
