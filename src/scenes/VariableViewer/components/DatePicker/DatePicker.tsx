@@ -32,6 +32,7 @@ const DatePicker: FC = () => {
 
   const handleCurrentDateChange = (date: Date) => {
     setDate(date)
+    setOpen(false)
     dispatch(setCurrentDate(date.toISOString()))
   }
 
