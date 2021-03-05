@@ -5,6 +5,7 @@ import { persistStore, persistReducer } from 'redux-persist'
 import createSagaMiddleware from 'redux-saga'
 import storage from 'redux-persist/lib/storage/session'
 import VariablesMap from 'services/map/classes/VariablesMap'
+import Api from '../api'
 
 const persistConfig = {
   key: 'variable_viewer_state',
@@ -29,6 +30,7 @@ export const configureStore = () => {
 
   const dependencies = {
     variablesMap: new VariablesMap(store),
+    api: new Api(),
   }
   sagas.forEach((saga) => sagaMiddleware.run(saga, dependencies))
 

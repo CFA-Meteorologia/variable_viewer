@@ -1,5 +1,5 @@
 import { Map, DomUtil, Layer, Util, LatLng } from 'leaflet'
-import { Bbox } from '../types'
+import { Bbox } from 'types/map'
 
 interface IWeatherVariableWMSLayer {
   new (url: string, options: { bbox: Bbox; variable: string; domain: number })

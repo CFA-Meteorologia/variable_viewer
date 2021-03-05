@@ -1,5 +1,5 @@
 import { MAP_CHANGE_CENTER } from './actions'
-import { VariableLayer } from './types'
+import { VariableLayer } from 'types/map'
 
 export interface IMapState {
   latitude: number
