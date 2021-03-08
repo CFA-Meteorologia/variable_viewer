@@ -1,8 +1,12 @@
-import React, { FC } from 'react'
-
 import styled, { css } from 'styled-components'
 
-const Button = styled.button`
+interface IProps {
+  theme?: 'text'
+  selected?: boolean
+  onClick: () => void
+}
+
+const Button = styled.button<IProps>`
   box-sizing: border-box;
   display: inline-block;
   cursor: pointer;
@@ -10,8 +14,6 @@ const Button = styled.button`
   border-radius: 4px;
   color: #000000;
   padding: 7px 10px;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-size: 14px;
   min-width: 50px;
   text-align: center;
   white-space: nowrap;
@@ -23,6 +25,16 @@ const Button = styled.button`
   &:hover {
     background-color: #ececec;
   }
+  ${({ theme, selected }) =>
+    theme === 'text' &&
+    css`
+      border: none;
+      background: none;
+      display: flex;
+      justify-content: center;
+      padding: 7px 0;
+      ${selected && `background-color: #ececec`}
+    `}
 `
 
 export default Button

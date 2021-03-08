@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux'
 import { createMap, removeMap } from 'services/map/actions'
 import Panel from './components/Panel/Panel'
 import DatePicker from './components/DatePicker/DatePicker'
+import VariablePicker from './components/VariablePicker/VariablePicker'
 
 const Wrapper = styled.div`
   width: 100vw;
@@ -20,13 +21,14 @@ const VariableViewer = () => {
     return () => {
       dispatch(removeMap())
     }
-  }, [])
+  }, [dispatch])
 
   return (
     <Wrapper>
       <Wrapper id={mapElemId} />
       <Panel position="right">
         <DatePicker />
+        <VariablePicker />
       </Panel>
     </Wrapper>
   )

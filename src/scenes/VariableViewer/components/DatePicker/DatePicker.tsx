@@ -19,6 +19,7 @@ const ButtonContainer = styled.div`
 `
 
 const DatePickerContainer = styled.div`
+  position: absolute;
   margin-top: 10px;
 `
 

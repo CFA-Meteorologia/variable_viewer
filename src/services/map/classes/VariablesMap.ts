@@ -8,6 +8,7 @@ import { TimeDimensionWMSLayer } from 'leaflet-timedimension-scoped'
 
 import 'leaflet/dist/leaflet.css'
 import 'leaflet-timedimension-scoped/src/leaflet.timedimension.control.css'
+import domainToNumber from '../../../helpers/domainToNumber'
 
 class VariablesMap {
   private lastMapCreated?: Map
@@ -44,7 +45,10 @@ class VariablesMap {
     layers.forEach((layer) => {
       const wmsLayer = new WeatherVariableWMSLayer(
         'http://localhost:8080/insmet/wms',
-        { ...layer },
+        {
+          ...layer,
+          domain: domainToNumber(layer.domain),
+        },
       )
       this.lastMapCreated?.addLayer(
         new TimeDimensionWMSLayer(wmsLayer, {

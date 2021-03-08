@@ -8,7 +8,7 @@ export type Bbox = {
 }
 export interface VariableLayer {
   variable: string
-  domain: number
+  domain: string
   bbox: Bbox
   // ISO 8601 time period
   time: string
