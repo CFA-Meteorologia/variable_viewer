@@ -57,6 +57,7 @@ class VariablesMap {
     this.lastMapCreated?.eachLayer((layer) => {
       if (layer !== this.baseLayer) this.lastMapCreated?.removeLayer(layer)
     })
+    layers.sort((a, b) => domainToNumber(a.domain) - domainToNumber(b.domain))
     layers.forEach((layer) => {
       const wmsLayer = new WeatherVariableWMSLayer(
         'http://localhost:8080/insmet/wms',
