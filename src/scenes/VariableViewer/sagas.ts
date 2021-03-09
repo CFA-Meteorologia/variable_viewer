@@ -10,7 +10,7 @@ import {
 import Api from 'services/api'
 import { selectDaysWithData, selectLayers } from './selectors'
 import { getMonth } from 'date-fns'
-import { setLayers } from '../../services/map/actions'
+import { setLayers } from 'services/map/actions'
 
 function* getAvailableDataInMonth(api: Api, action) {
   const date = action.payload
@@ -36,9 +36,7 @@ function* setVariable(action) {
   const variable = action.payload
 
   const layers = yield select(selectLayers)
-  const variableLayers = layers.filter(
-    (l) => l.variable === variable && l.domain === 'd01',
-  )
+  const variableLayers = layers.filter((l) => l.variable === variable)
   yield put(setLayers(variableLayers))
 }
 
