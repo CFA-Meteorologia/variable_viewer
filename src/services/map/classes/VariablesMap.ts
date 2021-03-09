@@ -1,5 +1,5 @@
 import { selectLayers, selectView, selectZoom } from '../selectors'
-import { Layer, Map, tileLayer } from 'leaflet'
+import { Layer, Map, TileLayer, tileLayer } from 'leaflet'
 import { Store } from 'redux'
 import { AppState } from 'types/appState'
 import { mapChangeView } from '../actions'
@@ -8,10 +8,11 @@ import { TimeDimensionWMSLayer } from 'leaflet-timedimension-scoped'
 
 import 'leaflet/dist/leaflet.css'
 import 'leaflet-timedimension-scoped/src/leaflet.timedimension.control.css'
-import domainToNumber from '../../../helpers/domainToNumber'
+import domainToNumber from 'helpers/domainToNumber'
 
 class VariablesMap {
   private lastMapCreated?: Map
+  private baseLayer?: TileLayer
 
   constructor(private store: Store<AppState, any>) {}
 
@@ -24,12 +25,11 @@ class VariablesMap {
       },
     })
 
-    const layer = tileLayer(
+    this.baseLayer = tileLayer(
       // eslint-disable-next-line
       'https://b.tile.openstreetmap.org/{z}/{x}/{y}.png',
     )
-
-    this.lastMapCreated.addLayer(layer)
+    this.lastMapCreated.addLayer(this.baseLayer)
 
     this.setCurrentView()
 
@@ -41,7 +41,22 @@ class VariablesMap {
     })
 
     const layers = selectLayers(this.store.getState())
+    this.setLayers(layers)
+  }
 
+  removeMap = () => {
+    this.lastMapCreated?.remove()
+  }
+
+  setCurrentView = () => {
+    const appState = this.store.getState()
+    this.lastMapCreated?.setView(selectView(appState), selectZoom(appState))
+  }
+
+  setLayers = (layers) => {
+    this.lastMapCreated?.eachLayer((layer) => {
+      if (layer !== this.baseLayer) this.lastMapCreated?.removeLayer(layer)
+    })
     layers.forEach((layer) => {
       const wmsLayer = new WeatherVariableWMSLayer(
         'http://localhost:8080/insmet/wms',
@@ -63,15 +78,6 @@ class VariablesMap {
         'replace',
       )
     })
-  }
-
-  removeMap = () => {
-    this.lastMapCreated?.remove()
-  }
-
-  setCurrentView = () => {
-    const appState = this.store.getState()
-    this.lastMapCreated?.setView(selectView(appState), selectZoom(appState))
   }
 }
 

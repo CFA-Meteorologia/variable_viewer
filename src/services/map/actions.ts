@@ -1,8 +1,10 @@
-import createAction from '../../helpers/createAction'
+import createAction from 'helpers/createAction'
+import { VariableLayer } from 'types/map'
 
 export const CREATE_MAP = 'CREATE_MAP'
 export const REMOVE_MAP = 'REMOVE_MAP'
 export const MAP_CHANGE_CENTER = 'MAP-CHANGE_CENTER'
+export const MAP_SET_LAYERS = 'MAP_SET_LAYERS'
 
 export const mapChangeView = (lat: number, lng: number, zoom: number) => ({
   type: MAP_CHANGE_CENTER,
@@ -17,3 +19,5 @@ export const createMap = (elementId) => ({
 export const removeMap = () => ({
   type: REMOVE_MAP,
 })
+
+export const setLayers = createAction<VariableLayer[]>(MAP_SET_LAYERS)

@@ -4,11 +4,13 @@ import {
   GET_AVAILABLE_DATA_IN_MONTH,
   getAvailableDataInMonthSuccessful,
   SET_CURRENT_DATE,
+  SET_CURRENT_VARIABLE,
   setCurrentDateSuccessful,
 } from './actions'
 import Api from 'services/api'
-import { selectDaysWithData } from './selectors'
+import { selectDaysWithData, selectLayers } from './selectors'
 import { getMonth } from 'date-fns'
+import { setLayers } from '../../services/map/actions'
 
 function* getAvailableDataInMonth(api: Api, action) {
   const date = action.payload
@@ -30,7 +32,18 @@ function* getLayersInDay(api: Api, action) {
   yield put(setCurrentDateSuccessful(layersInDay))
 }
 
+function* setVariable(action) {
+  const variable = action.payload
+
+  const layers = yield select(selectLayers)
+  const variableLayers = layers.filter(
+    (l) => l.variable === variable && l.domain === 'd01',
+  )
+  yield put(setLayers(variableLayers))
+}
+
 export default function* sagas({ api }: ISagasDependencies) {
   yield takeLatest(GET_AVAILABLE_DATA_IN_MONTH, getAvailableDataInMonth, api)
   yield takeLatest(SET_CURRENT_DATE, getLayersInDay, api)
+  yield takeLatest(SET_CURRENT_VARIABLE, setVariable)
 }
