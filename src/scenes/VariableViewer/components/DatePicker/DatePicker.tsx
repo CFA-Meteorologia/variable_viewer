@@ -20,7 +20,8 @@ const ButtonContainer = styled.div`
 
 const DatePickerContainer = styled.div`
   position: absolute;
-  margin-top: 10px;
+  right: 0;
+  margin-top: 5px;
 `
 
 const DatePicker: FC = () => {
@@ -42,13 +43,12 @@ const DatePicker: FC = () => {
   }
 
   const handleMonthChange = (date: Date) => {
-    dispatch(getAvailableDataInMonth(date.toISOString()))
     setDate(date)
   }
 
   useEffect(() => {
     dispatch(getAvailableDataInMonth(currentDate))
-  }, [])
+  }, [dispatch, currentDate])
 
   return (
     <>
