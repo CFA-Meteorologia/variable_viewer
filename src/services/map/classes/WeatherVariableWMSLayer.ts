@@ -6,35 +6,7 @@ interface IWeatherVariableWMSLayer {
 }
 
 const WeatherVariableWMSLayer: IWeatherVariableWMSLayer = Layer.extend({
-  // @section
-  // @aka TileLayer.WMS options
-  // If any custom options not documented here are used, they will be sent to the
-  // WMS server as extra parameters in each request URL. This can be useful for
-  // [non-standard vendor WMS parameters](http://docs.geoserver.org/stable/en/user/services/wms/vendor.html).
-  wmsParams: {
-    service: 'WMS',
-    request: 'GetMap',
-
-    // @option layers: String = ''
-    // **(required)** Comma-separated list of WMS layers to show.
-    layers: '',
-
-    // @option styles: String = ''
-    // Comma-separated list of WMS styles.
-    styles: '',
-
-    // @option format: String = 'image/jpeg'
-    // WMS image format (use `'image/png'` for layers with transparency).
-    format: 'image/jpeg',
-
-    // @option transparent: Boolean = false
-    // If `true`, the WMS service will return images with transparency.
-    transparent: false,
-
-    // @option version: String = '1.1.1'
-    // Version of the WMS service to use
-    version: '1.1.0',
-  },
+  wmsParams: null,
   workSpace: 'insmet',
   baseUrl: 'http://localhost:8080/insmet/wms',
   domainSizes: [300, 500, 500],
@@ -48,21 +20,36 @@ const WeatherVariableWMSLayer: IWeatherVariableWMSLayer = Layer.extend({
   },
 
   onAdd: function (map: Map) {
-    this._container = DomUtil.create('img')
+    this.container = DomUtil.create('img')
 
     // TimeDimensionWMS interface implementation
-    this._container.addEventListener('load', () => this.fire('load'))
+    this.container.addEventListener('load', () => this.fire('load'))
 
-    this.getPane().appendChild(this._container)
-    this._container.src = this.getRequestUrl()
-    this._container.className = 'leaflet-zoom-animated weather-tile'
+    this.getPane().appendChild(this.container)
+    this.configureContainer()
+
     this._update(map)
 
     map.on('zoomend viewreset', Util.bind(this._update, this, map), this)
   },
 
+  configureContainer: function () {
+    const northWest = this.getNorthWest(),
+      southEast = this.getSouthEast(),
+      bbox = [northWest.lng, southEast.lat, southEast.lng, northWest.lat].join(
+        ',',
+      )
+
+    this.container.src = this.getRequestUrl()
+    this.container.className = 'leaflet-zoom-animated weather-tile'
+    this.container.setAttribute('time', this.options.time)
+    this.container.setAttribute('bbox', bbox)
+    this.container.setAttribute('layer_name', this.getLayerName())
+    this.container.setAttribute('dimension', this.options.domain)
+  },
+
   onRemove: function (map) {
-    DomUtil.remove(this._container)
+    DomUtil.remove(this.container)
     map.off('zoomend viewreset')
   },
 
@@ -77,10 +64,10 @@ const WeatherVariableWMSLayer: IWeatherVariableWMSLayer = Layer.extend({
     const northWestPixel = map.latLngToLayerPoint(this.getNorthWest())
     const southEastPixel = map.latLngToLayerPoint(this.getSouthEast())
 
-    DomUtil.setPosition(this._container, northWestPixel)
-    this._container.style.width =
+    DomUtil.setPosition(this.container, northWestPixel)
+    this.container.style.width =
       Math.abs(northWestPixel.x - southEastPixel.x) + 'px'
-    this._container.style.height =
+    this.container.style.height =
       Math.abs(northWestPixel.y - southEastPixel.y) + 'px'
   },
   getRequestUrl: function () {
@@ -107,6 +94,30 @@ const WeatherVariableWMSLayer: IWeatherVariableWMSLayer = Layer.extend({
     return new LatLng(southEast.lat, southEast.long)
   },
   configureWMS: function () {
+    this.wmsParams = {
+      service: 'WMS',
+      request: 'GetMap',
+
+      // @option layers: String = ''
+      // **(required)** Comma-separated list of WMS layers to show.
+      layers: '',
+
+      // @option styles: String = ''
+      // Comma-separated list of WMS styles.
+      styles: '',
+
+      // @option format: String = 'image/jpeg'
+      // WMS image format (use `'image/png'` for layers with transparency).
+      format: 'image/jpeg',
+
+      // @option transparent: Boolean = false
+      // If `true`, the WMS service will return images with transparency.
+      transparent: false,
+
+      // @option version: String = '1.1.1'
+      // Version of the WMS service to use
+      version: '1.1.0',
+    }
     this.wmsParams.layers = this.getLayerName()
     const { domain } = this.options
     const size = this.domainSizes[domain - 1]
@@ -130,20 +141,24 @@ const WeatherVariableWMSLayer: IWeatherVariableWMSLayer = Layer.extend({
 
   hide: function () {
     this._visible = false
-    if (this._container) {
-      this._container.style.display = 'none'
+    if (this.container) {
+      this.container.style.display = 'none'
     }
   },
 
   show: function () {
     this._visible = true
-    if (this._container) {
-      this._container.style.display = 'block'
+    if (this.container) {
+      this.container.style.display = 'block'
     }
   },
 
   getURL: function () {
     return this.baseUrl
+  },
+
+  redraw: function () {
+    this._update(this._map)
   },
 })
 
