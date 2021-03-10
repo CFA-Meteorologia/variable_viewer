@@ -11,7 +11,7 @@ function* removeMap(variablesMap: VariablesMap) {
   yield call(variablesMap.removeMap)
 }
 
-function* setLayers(variablesMap: VariablesMap, action) {
+function setLayers(variablesMap: VariablesMap, action) {
   const layers = action.payload
   variablesMap.setLayers(layers)
 }
