@@ -7150,10 +7150,10 @@ last-call-webpack-plugin@^3.0.0:
     lodash "^4.17.5"
     webpack-sources "^1.1.0"
 
-leaflet-timedimension-scoped@^0.0.28:
-  version "0.0.28"
-  resolved "https://registry.yarnpkg.com/leaflet-timedimension-scoped/-/leaflet-timedimension-scoped-0.0.28.tgz#25445dbd817772599cd09dcc506efce51e13fd05"
-  integrity sha512-8Fd+CWvy44hjF5o3B03IZUiCMmmV7p7XsDvNME+Clv0IkI3qYq1UnKh/zdB1Y1iiLpm5jFGMD6RjpVOQxdytgA==
+leaflet-timedimension-scoped@^0.0.32:
+  version "0.0.32"
+  resolved "https://registry.yarnpkg.com/leaflet-timedimension-scoped/-/leaflet-timedimension-scoped-0.0.32.tgz#6249c03121fa4c0813f841c3e4263a6cc3d1fb8a"
+  integrity sha512-cKOsRr+EIlkxu4RT3Jm3AodQDhADWM1OXXyPcHRgQdLRDMd0EquCY3DImradk+110U1cnVEt3tF/HMywn8K+sQ==
   dependencies:
     iso8601-js-period "^0.2.1"
     leaflet "^1.7.1"

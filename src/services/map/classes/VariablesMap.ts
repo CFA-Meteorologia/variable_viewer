@@ -4,7 +4,10 @@ import { Store } from 'redux'
 import { AppState } from 'types/appState'
 import { mapChangeView } from '../actions'
 import WeatherVariableWMSLayer from './WeatherVariableWMSLayer'
-import { TimeDimensionWMSLayer } from 'leaflet-timedimension-scoped'
+import {
+  TimeDimensionWMSLayer,
+  TimeDimension,
+} from 'leaflet-timedimension-scoped'
 
 import 'leaflet/dist/leaflet.css'
 import 'leaflet-timedimension-scoped/src/leaflet.timedimension.control.css'
@@ -13,12 +16,13 @@ import domainToNumber from 'helpers/domainToNumber'
 class VariablesMap {
   private lastMapCreated?: Map
   private baseLayer?: TileLayer
+  private timeDimension = new TimeDimension({})
 
   constructor(private store: Store<AppState, any>) {}
 
   createMap = (elementId: string) => {
     this.lastMapCreated = new Map(elementId, {
-      timeDimension: true,
+      timeDimension: this.timeDimension,
       timeDimensionControl: true,
       timeDimensionControlOptions: {
         onlyUTC: true,
@@ -58,6 +62,11 @@ class VariablesMap {
       if (layer !== this.baseLayer) this.lastMapCreated?.removeLayer(layer)
     })
     layers.sort((a, b) => domainToNumber(a.domain) - domainToNumber(b.domain))
+
+    this.timeDimension.setAvailableTimes(
+      layers[layers.length - 1].time,
+      'replace',
+    )
     layers.forEach((layer) => {
       const wmsLayer = new WeatherVariableWMSLayer(
         'http://localhost:8080/insmet/wms',
@@ -71,12 +80,6 @@ class VariablesMap {
           cache: 24,
           wmsVersion: '1.1.0',
         }) as Layer,
-      )
-
-      // @ts-ignore
-      this.lastMapCreated?.timeDimension.setAvailableTimes(
-        layer.time,
-        'replace',
       )
     })
   }

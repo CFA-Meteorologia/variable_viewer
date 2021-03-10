@@ -56,11 +56,6 @@ const WeatherVariableWMSLayer: IWeatherVariableWMSLayer = Layer.extend({
   _update: function (map: Map) {
     // Recalculate position of container
 
-    // TimeDimensionWMS interface implementation
-    if (!this._visible && this._loaded) {
-      return
-    }
-
     const northWestPixel = map.latLngToLayerPoint(this.getNorthWest())
     const southEastPixel = map.latLngToLayerPoint(this.getSouthEast())
 
@@ -159,6 +154,7 @@ const WeatherVariableWMSLayer: IWeatherVariableWMSLayer = Layer.extend({
 
   redraw: function () {
     this._update(this._map)
+    this.fire('load')
   },
 })
 
