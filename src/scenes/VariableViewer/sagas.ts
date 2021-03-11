@@ -3,13 +3,19 @@ import { ISagasDependencies } from 'types/app'
 import {
   GET_AVAILABLE_DATA_IN_MONTH,
   getAvailableDataInMonthSuccessful,
+  SELECT_DOMAINS,
   SET_CURRENT_DATE,
   SET_CURRENT_VARIABLE,
   setCurrentDateSuccessful,
   setCurrentVariable,
 } from './actions'
 import Api from 'services/api'
-import { selectDaysWithData, selectLayers } from './selectors'
+import {
+  selectCurrentVariable,
+  selectDaysWithData,
+  selectLayers,
+  selectSelectedDomains,
+} from './selectors'
 import { getMonth } from 'date-fns'
 import { setLayers } from 'services/map/actions'
 
@@ -39,12 +45,22 @@ function* setVariableSaga(action) {
   const variable = action.payload
 
   const layers = yield select(selectLayers)
-  const variableLayers = layers.filter((l) => l.variable === variable)
+  const selectedDomains = yield select(selectSelectedDomains)
+  const variableLayers = layers.filter(
+    (l) => l.variable === variable && selectedDomains.includes(l.domain),
+  )
   yield put(setLayers(variableLayers))
+}
+
+function* setSelectedDomainsSaga() {
+  const variable = yield select(selectCurrentVariable)
+
+  yield put(setCurrentVariable(variable))
 }
 
 export default function* sagas({ api }: ISagasDependencies) {
   yield takeLatest(GET_AVAILABLE_DATA_IN_MONTH, getAvailableDataInMonth, api)
   yield takeLatest(SET_CURRENT_DATE, setCurrentDateSaga, api)
   yield takeLatest(SET_CURRENT_VARIABLE, setVariableSaga)
+  yield takeLatest(SELECT_DOMAINS, setSelectedDomainsSaga)
 }
