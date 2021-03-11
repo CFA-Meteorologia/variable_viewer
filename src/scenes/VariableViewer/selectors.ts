@@ -1,8 +1,8 @@
 import { AppState } from 'types/appState'
 import { createSelector } from 'reselect'
-import uniques from '../../helpers/uniques'
+import uniques from 'helpers/uniques'
 
-const selectState = (state: AppState) => state.variableViewerReducer
+const selectState = (state: AppState) => state.variableViewer
 
 export const selectCurrentDate = (state) => selectState(state).currentDate
 export const selectIsLoadingDaysWithData = (state) =>

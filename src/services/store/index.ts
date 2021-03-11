@@ -2,6 +2,7 @@ import reducers from './reducers'
 import sagas from './sagas'
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux'
 import { persistStore, persistReducer } from 'redux-persist'
+import { createTimeDimension } from 'services/timeDimension'
 import createSagaMiddleware from 'redux-saga'
 import storage from 'redux-persist/lib/storage/session'
 import VariablesMap from 'services/map/classes/VariablesMap'
@@ -28,9 +29,12 @@ export const configureStore = () => {
     composeEnhancers(applyMiddleware(sagaMiddleware)),
   )
 
+  const timeDimension = createTimeDimension(store)
+
   const dependencies = {
-    variablesMap: new VariablesMap(store),
+    variablesMap: new VariablesMap(store, timeDimension),
     api: new Api(),
+    timeDimension: timeDimension,
   }
   sagas.forEach((saga) => sagaMiddleware.run(saga, dependencies))
 

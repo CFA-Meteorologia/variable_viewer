@@ -1,8 +1,10 @@
-import variableViewerReducer from 'scenes/VariableViewer/reducer'
-import mapReducer from 'services/map/reducer'
+import variableViewer from 'scenes/VariableViewer/reducer'
+import map from 'services/map/reducer'
+import timeDimension from 'services/timeDimension/reducer'
 
 const reducers = {
-  variableViewerReducer,
-  mapReducer,
+  variableViewer,
+  map,
+  timeDimension,
 }
 export default reducers

@@ -1,7 +1,7 @@
 import { LatLng } from 'leaflet'
 import { AppState } from '../../types/appState'
 
-const selectState = (state: AppState) => state.mapReducer
+const selectState = (state: AppState) => state.map
 
 export const selectView = (state) => {
   const featureState = selectState(state)

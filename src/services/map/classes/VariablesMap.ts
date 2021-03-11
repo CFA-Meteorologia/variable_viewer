@@ -16,16 +16,17 @@ import domainToNumber from 'helpers/domainToNumber'
 class VariablesMap {
   private lastMapCreated?: Map
   private baseLayer?: TileLayer
-  private timeDimension = new TimeDimension({})
 
-  constructor(private store: Store<AppState, any>) {}
+  constructor(private store: Store<AppState, any>, private timeDimension) {}
 
   createMap = (elementId: string) => {
     this.lastMapCreated = new Map(elementId, {
       timeDimension: this.timeDimension,
       timeDimensionControl: true,
       timeDimensionControlOptions: {
-        onlyUTC: true,
+        playerOptions: {
+          transitionTime: 1500,
+        },
       },
     })
 
