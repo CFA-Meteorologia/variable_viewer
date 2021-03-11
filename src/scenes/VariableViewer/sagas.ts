@@ -6,6 +6,7 @@ import {
   SET_CURRENT_DATE,
   SET_CURRENT_VARIABLE,
   setCurrentDateSuccessful,
+  setCurrentVariable,
 } from './actions'
 import Api from 'services/api'
 import { selectDaysWithData, selectLayers } from './selectors'
@@ -25,14 +26,16 @@ function* getAvailableDataInMonth(api: Api, action) {
   yield put(getAvailableDataInMonthSuccessful(datesWithData))
 }
 
-function* getLayersInDay(api: Api, action) {
+function* setCurrentDateSaga(api: Api, action) {
   const currentDate = action.payload
 
   const layersInDay = yield call(api.fetchLayersInDay, currentDate)
   yield put(setCurrentDateSuccessful(layersInDay))
+  const variable = layersInDay[0].variable
+  yield put(setCurrentVariable(variable))
 }
 
-function* setVariable(action) {
+function* setVariableSaga(action) {
   const variable = action.payload
 
   const layers = yield select(selectLayers)
@@ -42,6 +45,6 @@ function* setVariable(action) {
 
 export default function* sagas({ api }: ISagasDependencies) {
   yield takeLatest(GET_AVAILABLE_DATA_IN_MONTH, getAvailableDataInMonth, api)
-  yield takeLatest(SET_CURRENT_DATE, getLayersInDay, api)
-  yield takeLatest(SET_CURRENT_VARIABLE, setVariable)
+  yield takeLatest(SET_CURRENT_DATE, setCurrentDateSaga, api)
+  yield takeLatest(SET_CURRENT_VARIABLE, setVariableSaga)
 }
