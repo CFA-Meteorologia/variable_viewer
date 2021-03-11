@@ -23,7 +23,7 @@ const Button = styled.button<IProps>`
     outline: none;
   }
   &:hover {
-    background-color: #ececec;
+    background-color: #c7c7c7;
   }
   ${({ theme, selected }) =>
     theme === 'text' &&
@@ -33,7 +33,13 @@ const Button = styled.button<IProps>`
       display: flex;
       justify-content: center;
       padding: 7px 0;
-      ${selected && `background-color: #ececec`}
+      ${selected &&
+      css`
+        background-color: #ececec;
+        &:hover {
+          background-color: #d4d4d4;
+        }
+      `}
     `}
 `
 

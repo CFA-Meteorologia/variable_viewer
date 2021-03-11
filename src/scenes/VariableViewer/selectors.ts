@@ -20,3 +20,6 @@ export const selectAvailableVariableNames = createSelector(
 
 export const selectCurrentVariable = (state) =>
   selectState(state).currentVariable
+
+export const selectSelectedDomains = (state) =>
+  selectState(state).selectedDomains

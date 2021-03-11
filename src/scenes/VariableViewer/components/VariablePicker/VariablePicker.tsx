@@ -9,13 +9,7 @@ import styled from 'styled-components'
 import { setCurrentVariable } from '../../actions'
 import { useMemo } from 'react'
 import makeChunks from 'helpers/makeChunks'
-
-const Container = styled.div`
-  background: #bdbdbd;
-  padding: 5px;
-  margin-top: 5px;
-  border-radius: 5px;
-`
+import Container from 'components/Container/Container'
 
 const Row = styled.div`
   display: flex;

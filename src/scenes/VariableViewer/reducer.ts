@@ -2,6 +2,7 @@ import { VariableLayer } from 'types/map'
 import {
   GET_AVAILABLE_DATA_IN_MONTH,
   GET_AVAILABLE_DATA_IN_MONTH_SUCCESSFUL,
+  SELECT_DOMAINS,
   SET_CURRENT_DATE,
   SET_CURRENT_DATE_SUCCESSFUL,
   SET_CURRENT_VARIABLE,
@@ -13,6 +14,7 @@ export interface IVariableViewerState {
   loadingDateLayers: boolean
   daysInMonthWithData: string[]
   loadingDaysWithData: boolean
+  selectedDomains: string[]
   layers: VariableLayer[]
 }
 
@@ -23,6 +25,7 @@ const initialState: IVariableViewerState = {
   loadingDaysWithData: false,
   currentVariable: null,
   layers: [],
+  selectedDomains: ['d01', 'd02', 'd03'],
 }
 
 const reducer = function (state = initialState, { type, payload }) {
@@ -58,6 +61,12 @@ const reducer = function (state = initialState, { type, payload }) {
       return {
         ...state,
         currentVariable: payload,
+      }
+    }
+    case SELECT_DOMAINS: {
+      return {
+        ...state,
+        selectedDomains: payload,
       }
     }
     default:

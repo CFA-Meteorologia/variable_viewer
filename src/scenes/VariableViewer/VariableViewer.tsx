@@ -5,6 +5,7 @@ import { createMap, removeMap } from 'services/map/actions'
 import Panel from './components/Panel/Panel'
 import DatePicker from './components/DatePicker/DatePicker'
 import VariablePicker from './components/VariablePicker/VariablePicker'
+import DomainPicker from './components/DomainPicker/DomainPicker'
 
 const Wrapper = styled.div`
   width: 100vw;
@@ -29,6 +30,7 @@ const VariableViewer = () => {
       <Panel position="right">
         <DatePicker />
         <VariablePicker />
+        <DomainPicker />
       </Panel>
     </Wrapper>
   )
