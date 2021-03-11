@@ -7,6 +7,7 @@ import WeatherVariableWMSLayer from './WeatherVariableWMSLayer'
 import {
   TimeDimensionWMSLayer,
   TimeDimension,
+  parseTimesExpression,
 } from 'leaflet-timedimension-scoped'
 
 import 'leaflet/dist/leaflet.css'
@@ -62,12 +63,14 @@ class VariablesMap {
     this.lastMapCreated?.eachLayer((layer) => {
       if (layer !== this.baseLayer) this.lastMapCreated?.removeLayer(layer)
     })
-    layers.sort((a, b) => domainToNumber(a.domain) - domainToNumber(b.domain))
 
-    this.timeDimension.setAvailableTimes(
-      layers[layers.length - 1].time,
-      'replace',
-    )
+    const maxTimeIntervals = layers.sort(
+      (a, b) =>
+        parseTimesExpression(b.time).length -
+        parseTimesExpression(a.time).length,
+    )[0].time
+
+    this.timeDimension.setAvailableTimes(maxTimeIntervals, 'replace')
     layers.forEach((layer) => {
       const wmsLayer = new WeatherVariableWMSLayer(
         'http://localhost:8080/insmet/wms',

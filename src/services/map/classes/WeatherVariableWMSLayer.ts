@@ -42,6 +42,7 @@ const WeatherVariableWMSLayer: IWeatherVariableWMSLayer = Layer.extend({
 
     this.container.src = this.getRequestUrl()
     this.container.className = 'leaflet-zoom-animated weather-tile'
+    this.container.style.zIndex = this.options.domain
     this.container.setAttribute('time', this.options.time)
     this.container.setAttribute('bbox', bbox)
     this.container.setAttribute('layer_name', this.getLayerName())
