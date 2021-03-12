@@ -1948,6 +1948,13 @@
   resolved "https://registry.yarnpkg.com/@types/json5/-/json5-0.0.29.tgz#ee28707ae94e11d2b827bcbe5270bcea7f3e71ee"
   integrity sha1-7ihweulOEdK4J7y+UnC86n8+ce4=
 
+"@types/leaflet@^1.2.5":
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/@types/leaflet/-/leaflet-1.7.0.tgz#3700fb5d29a8214fbd496565b08ec28e40cee808"
+  integrity sha512-ltv5jR+VjKSMtoDkxH61Rsbo0zLU7iqyOXpVPkAX4F+79fg2eymC7t0msWsfNaEZO1FGTIQATCCCQe+ijWoicg==
+  dependencies:
+    "@types/geojson" "*"
+
 "@types/leaflet@^1.5.19":
   version "1.5.19"
   resolved "https://registry.yarnpkg.com/@types/leaflet/-/leaflet-1.5.19.tgz#f290e21fe7a4744d68bb4b0709e99ce490120e6e"
@@ -7157,6 +7164,31 @@ leaflet-timedimension-scoped@^0.0.39:
   dependencies:
     iso8601-js-period "^0.2.1"
     leaflet "^1.7.1"
+
+leaflet-velocity-ts-scoped@^0.0.6:
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/leaflet-velocity-ts-scoped/-/leaflet-velocity-ts-scoped-0.0.6.tgz#f87fd3022dfe5475ea5dc46acf5dafcf45d6ffb8"
+  integrity sha512-M8gXWpFPyBZRlj7N71x7a9hVpIB5kz/+cJ97zkZ+sPpVbtdFS27yUFwaqpal2sgIttE3LZA75KhoEPtEJqDbYw==
+  dependencies:
+    leaflet "^1.7.1"
+
+leaflet-velocity-ts@^1.1.7:
+  version "1.1.7"
+  resolved "https://registry.yarnpkg.com/leaflet-velocity-ts/-/leaflet-velocity-ts-1.1.7.tgz#b2a49f816562ddd4126b7ae0337f9a0835345e4d"
+  integrity sha512-GeYgU5hvjyaLYT+CSnBzcKInYLv6J+o04/Idqmia8V82ibjfoAMFi3VLWc91MH6sRATTwfcINF2pa9B6hZD5/w==
+  dependencies:
+    "@types/leaflet" "^1.2.5"
+    leaflet "1.2.0"
+
+leaflet-velocity@^1.9.0:
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/leaflet-velocity/-/leaflet-velocity-1.9.0.tgz#dd2a434f53bcf0527488c5d6bf9efede3493d9c7"
+  integrity sha512-kfU2yChWGlX6AgvXVtlnT+FkrvUDy509mxVUXQ5QgQokDzpBlaCa1teNiq9o7ldV1e2jdjwdvN4oTXyk8NpkLA==
+
+leaflet@1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/leaflet/-/leaflet-1.2.0.tgz#fd5d93d9cb00091f5f8a69206d0d6744c1c82697"
+  integrity sha512-Bold8phAE6WcRsuwhofrQ7cOK1REFHaYIkKuj7+TBYK3ONKRpGGIb5oXR5akYotFnrWN0TWKh6Svlhflm3dogg==
 
 leaflet@^1.7.1:
   version "1.7.1"

@@ -1,4 +1,8 @@
-import { MAP_CHANGE_CENTER, MAP_SET_LAYERS } from './actions'
+import {
+  MAP_CHANGE_CENTER,
+  MAP_SET_LAYERS,
+  SET_SHOW_WIND_LAYER,
+} from './actions'
 import { VariableLayer } from 'types/map'
 
 export interface IMapState {
@@ -6,6 +10,7 @@ export interface IMapState {
   longitude: number
   zoom: number
   layers: VariableLayer[]
+  showWindLayer: boolean
 }
 
 const initialState: IMapState = {
@@ -14,6 +19,7 @@ const initialState: IMapState = {
   longitude: -72.55371093750001,
   zoom: 5,
   layers: [],
+  showWindLayer: true,
 }
 
 const reducer = function (state = initialState, { type, payload }) {
@@ -30,6 +36,12 @@ const reducer = function (state = initialState, { type, payload }) {
       return {
         ...state,
         layers: payload,
+      }
+    }
+    case SET_SHOW_WIND_LAYER: {
+      return {
+        ...state,
+        showWindLayer: payload,
       }
     }
     default:

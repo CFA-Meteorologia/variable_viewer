@@ -10,3 +10,4 @@ export const selectView = (state) => {
 
 export const selectLayers = (state) => selectState(state).layers
 export const selectZoom = (state) => selectState(state).zoom
+export const selectShowWindLayer = (state) => selectState(state).showWindLayer

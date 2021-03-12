@@ -23,8 +23,6 @@ const DomainPicker: FC = () => {
       clonedDomains = selectedDomains.filter((d) => d !== domain)
     else clonedDomains = [...selectedDomains, domain]
 
-    if (clonedDomains.length === 0) clonedDomains.push(domains[0])
-
     dispatch(selectDomains(clonedDomains))
   }
   return (

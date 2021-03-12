@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from 'axios'
 import variables from 'helpers/environmentVars'
-import { VariableLayer } from 'types/map'
+import { IVariable, VariableLayer } from 'types/map'
 
 class Api {
   conn: AxiosInstance
@@ -21,6 +21,14 @@ class Api {
   fetchLayersInDay = async (date: string) => {
     const { data } = await this.conn.get<VariableLayer[]>(
       `variables/layers/${date}`,
+    )
+
+    return data
+  }
+
+  fetchVarData = async (varName: string, date: string, domain: number) => {
+    const { data } = await this.conn.get<IVariable>(
+      `variables/${varName}/${date}/${domain}`,
     )
 
     return data

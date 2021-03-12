@@ -1,3 +1,5 @@
+export type VariableDomain = 'd01' | 'd02' | 'd03'
+
 export type Coord = {
   long: number
   lat: number
@@ -12,4 +14,13 @@ export interface VariableLayer {
   bbox: Bbox
   // ISO 8601 time period
   time: string
+}
+
+export interface IVariable {
+  domain: VariableDomain
+  data: number[][]
+  projection: string
+  date: Date
+  variableName: string
+  bbox: Bbox
 }
